@@ -177,3 +177,9 @@ h1 {
     font-weight: bold;
     margin-top: 10px;
 }
+.success-message {
+    color: green; /* Set success message color */
+    margin-top: 10px; /* Space above the message */
+    font-weight: bold; /* Make the text bold */
+  }
+  

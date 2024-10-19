@@ -28,6 +28,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
   });
 
   const [error, setError] = useState<string | null>(null); // State for error message
+  const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success message
 
   useEffect(() => {
     if (editingUser) {
@@ -51,6 +52,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
     // Validation check
     if (!user.first_name || !user.last_name || !user.username || !user.marital_status || user.age <= 0) {
       setError('Please fill in all fields correctly.');
+      setSuccessMessage(null); // Clear success message on error
       return;
     } else {
       setError(null); // Clear error if validation passes
@@ -60,8 +62,10 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
       editUser(user);
     } else {
       addUser({ ...user, username: Date.now().toString() });
+      setSuccessMessage('User added successfully!'); // Set success message
     }
 
+    // Reset the form fields
     setUser({
       first_name: '',
       last_name: '',
@@ -71,6 +75,11 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
       is_employed: false,
       is_founder: false,
     });
+
+    // Optionally clear success message after a few seconds
+    setTimeout(() => {
+      setSuccessMessage(null);
+    }, 3000); // Clear message after 3 seconds
   };
 
   return (
@@ -136,6 +145,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
         </label>
         <button type="submit">{editingUser ? 'Update' : 'Add'} User</button>
         {error && <p className="error-message">{error}</p>} {/* Error message display */}
+        {successMessage && <p className="success-message">{successMessage}</p>} {/* Success message display */}
       </form>
     </div>
   );
