@@ -117,6 +117,7 @@ h1 {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap; /* Allow wrapping of pagination buttons */
     padding: 0;
 }
 
@@ -160,7 +161,13 @@ h1 {
     }
 
     .pagination {
-        flex-direction: column; /* Stack pagination vertically on small screens */
+        flex-direction: row; /* Ensure horizontal layout for larger screens */
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+
+    .pagination-button {
+        flex: 1 1 auto; /* Allow buttons to grow/shrink */
+        margin: 5px; /* Add margin for better spacing */
     }
 }
 
