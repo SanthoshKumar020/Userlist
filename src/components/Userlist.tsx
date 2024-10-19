@@ -14,63 +14,61 @@ interface User {
 interface UserListProps {
   users: User[];
   deleteUser: (username: string) => void;
-  setEditingUser: (user: User) => void;
+  updateUser: (updatedUser: User) => void;
 }
 
-const UserList: React.FC<UserListProps> = ({ users, deleteUser, setEditingUser }) => {
+const UserList: React.FC<UserListProps> = ({ users, deleteUser, updateUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5; // Number of users per page
+  const usersPerPage = 5; // Number of users to display per page
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const totalPages = Math.ceil(users.length / usersPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
-    <div>
-      <div className="user-list">
+    <div className="user-list">
+      <div className="user-cards">
         {currentUsers.map(user => (
           <UserCard
             key={user.username}
             user={user}
             deleteUser={deleteUser}
-            setEditingUser={setEditingUser}
+            updateUser={updateUser} // Pass the update function
           />
         ))}
       </div>
-      <Pagination
-        usersPerPage={usersPerPage}
-        totalUsers={users.length}
-        paginate={paginate}
-      />
-    </div>
-  );
-};
-
-const Pagination: React.FC<{ usersPerPage: number; totalUsers: number; paginate: (pageNumber: number) => void }> = ({
-  usersPerPage,
-  totalUsers,
-  paginate,
-}) => {
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  return (
-    <nav>
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li key={number} className="page-item">
-            <button onClick={() => paginate(number)} className="page-link">
-              {number}
-            </button>
-          </li>
+      <div className="pagination">
+        <button 
+          onClick={() => handlePageChange(currentPage - 1)} 
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          Prev
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i + 1}
+            onClick={() => handlePageChange(i + 1)}
+            className={`pagination-button ${currentPage === i + 1 ? 'active' : ''}`}
+          >
+            {i + 1}
+          </button>
         ))}
-      </ul>
-    </nav>
+        <button 
+          onClick={() => handlePageChange(currentPage + 1)} 
+          disabled={currentPage === totalPages}
+          className="pagination-button"
+        >
+          Next
+        </button>
+      </div>
+    </div>
   );
 };
 

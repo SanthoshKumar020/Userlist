@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface User {
   first_name: string;
@@ -22,10 +22,12 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
     last_name: '',
     username: '',
     age: 0,
-    marital_status: 'Single', // default value
+    marital_status: '',
     is_employed: false,
-    is_founder: false
+    is_founder: false,
   });
+
+  const [error, setError] = useState<string | null>(null); // State for error message
 
   useEffect(() => {
     if (editingUser) {
@@ -36,28 +38,38 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
         last_name: '',
         username: '',
         age: 0,
-        marital_status: 'Single',
+        marital_status: '',
         is_employed: false,
-        is_founder: false
+        is_founder: false,
       });
     }
   }, [editingUser]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation check
+    if (!user.first_name || !user.last_name || !user.username || !user.marital_status || user.age <= 0) {
+      setError('Please fill in all fields correctly.');
+      return;
+    } else {
+      setError(null); // Clear error if validation passes
+    }
+
     if (editingUser) {
       editUser(user);
     } else {
       addUser({ ...user, username: Date.now().toString() });
     }
+
     setUser({
       first_name: '',
       last_name: '',
       username: '',
       age: 0,
-      marital_status: 'Single',
+      marital_status: '',
       is_employed: false,
-      is_founder: false
+      is_founder: false,
     });
   };
 
@@ -93,16 +105,13 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
           onChange={(e) => setUser({ ...user, age: parseInt(e.target.value) })}
           required
         />
-        <select
+        <input
+          type="text"
+          placeholder="Marital Status"
           value={user.marital_status}
           onChange={(e) => setUser({ ...user, marital_status: e.target.value })}
           required
-        >
-          <option value="Single">Single</option>
-          <option value="Married">Married</option>
-          <option value="Divorced">Divorced</option>
-          <option value="Widowed">Widowed</option>
-        </select>
+        />
         <label>
           Employed:
           <input
@@ -120,6 +129,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
           />
         </label>
         <button type="submit">{editingUser ? 'Update' : 'Add'} User</button>
+        {error && <p className="error-message">{error}</p>} {/* Error message display */}
       </form>
     </div>
   );

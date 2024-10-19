@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import UserList from './components/Userlist';
 import UserForm from './components/UserForm';
+import UserList from './components/Userlist';
 import './styles.css';
 
 interface User {
@@ -16,9 +16,7 @@ interface User {
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  // Fetch users from the API
   useEffect(() => {
     axios.get('https://mocki.io/v1/a6a0fb6b-a84a-4934-b3f2-5c92cc77c44e')
       .then(response => {
@@ -34,21 +32,23 @@ const App: React.FC = () => {
   };
 
   const deleteUser = (username: string) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
+    const confirmDelete = window.confirm('Are you sure you want to delete this user?');
+    if (confirmDelete) {
       setUsers(users.filter(user => user.username !== username));
     }
   };
 
-  const editUser = (updatedUser: User) => {
+  const updateUser = (updatedUser: User) => {
     setUsers(users.map(user => (user.username === updatedUser.username ? updatedUser : user)));
-    setEditingUser(null);
   };
 
   return (
     <div className="container">
       <h1>User List</h1>
-      <UserForm addUser={addUser} editUser={editUser} editingUser={editingUser} />
-      <UserList users={users} deleteUser={deleteUser} setEditingUser={setEditingUser} />
+      <UserForm addUser={addUser} editUser={function (user: User): void {
+        throw new Error('Function not implemented.');
+      } } editingUser={null} />
+      <UserList users={users} deleteUser={deleteUser} updateUser={updateUser} />
     </div>
   );
 };
