@@ -1,0 +1,123 @@
+/* Container for the overall layout */
+.container {
+    max-width: 800px;              /* Limit the max width */
+    margin: 0 auto;                /* Center the container */
+    padding: 20px;                 /* Add some padding */
+    text-align: center;            /* Center text */
+}
+
+/* Main heading style */
+h1 {
+    color: #333;                   /* Dark color for the heading */
+}
+
+/* User form container styling */
+.user-form-container {
+    display: flex;                  /* Use flexbox for layout */
+    flex-wrap: wrap;               /* Allow wrapping to the next row */
+    justify-content: space-between; /* Space out the forms */
+}
+
+/* Style for individual user form */
+.user-form {
+    flex: 1 1 calc(33.33% - 20px); /* Take 1/3 of the row width with some margin */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    border-radius: 8px;            /* Rounded corners */
+    background-color: #f9f9f9;     /* Light background color */
+    margin: 10px;                  /* Margin around the forms */
+    padding: 20px;                 /* Padding inside the forms */
+}
+
+/* Input fields styling */
+.user-form input,
+.user-form select {
+    padding: 10px;                 /* Padding for input fields */
+    margin: 10px 0;               /* Vertical margin */
+    width: 100%;                   /* Full width */
+    border: 1px solid #ddd;       /* Border for input fields */
+    border-radius: 4px;           /* Rounded corners */
+}
+
+/* Dropdown styling */
+.user-form select {
+    appearance: none;              /* Remove default styling */
+    background-color: white;      /* Set background color */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5" style="fill:%23007bff"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;  /* No repeat */
+    background-position: right 10px center; /* Position arrow */
+    padding-right: 30px;          /* Space for arrow */
+}
+
+/* Button styling */
+.user-form button {
+    padding: 10px 15px;           /* Padding for buttons */
+    margin-top: 10px;             /* Margin above button */
+    background-color: #007bff;    /* Primary color */
+    color: white;                  /* White text color */
+    border: none;                  /* Remove border */
+    border-radius: 4px;           /* Rounded corners */
+    cursor: pointer;               /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+/* Button hover effect */
+.user-form button:hover {
+    background-color: #0056b3;     /* Darken button on hover */
+}
+
+/* User list styling */
+.user-list {
+    display: grid;                 /* Use grid for user list */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid layout */
+    gap: 20px;                    /* Space between user cards */
+    margin-top: 20px;             /* Margin above user list */
+}
+
+/* User card styling */
+.user-card {
+    border: 1px solid #ddd;        /* Border for user card */
+    padding: 20px;                 /* Padding inside user card */
+    border-radius: 8px;            /* Rounded corners */
+    background-color: #f9f9f9;     /* Light background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+/* User card heading style */
+.user-card h3 {
+    margin: 0;                    /* Remove default margin */
+}
+
+/* User card button styling */
+.user-card button {
+    padding: 8px 12px;           /* Padding for user card buttons */
+    margin: 5px;                 /* Margin for buttons */
+    background-color: #007bff;    /* Primary button color */
+    color: white;                  /* White text color */
+    border: none;                  /* Remove border */
+    cursor: pointer;               /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+/* User card button hover effect */
+.user-card button:last-child {
+    background-color: #dc3545;    /* Red color for delete button */
+}
+
+.user-card button:hover {
+    background-color: #0056b3;     /* Darken button on hover */
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .user-form {
+        flex: 1 1 100%;             /* Stack forms vertically on smaller screens */
+    }
+
+    .user-card {
+        font-size: 14px;           /* Smaller font size for user card on mobile */
+    }
+
+    .user-list {
+        grid-template-columns: 1fr; /* Single column layout for user cards on mobile */
+    }
+}
