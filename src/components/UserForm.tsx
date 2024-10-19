@@ -105,13 +105,19 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
           onChange={(e) => setUser({ ...user, age: parseInt(e.target.value) })}
           required
         />
-        <input
-          type="text"
-          placeholder="Marital Status"
+        <label htmlFor="marital_status">Marital Status</label>
+        <select
+          id="marital_status"
           value={user.marital_status}
           onChange={(e) => setUser({ ...user, marital_status: e.target.value })}
           required
-        />
+        >
+          <option value="" disabled>Select Marital Status</option>
+          <option value="single">Single</option>
+          <option value="married">Married</option>
+          <option value="divorced">Divorced</option>
+          <option value="widowed">Widowed</option>
+        </select>
         <label>
           Employed:
           <input
