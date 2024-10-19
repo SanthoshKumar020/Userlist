@@ -22,9 +22,9 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
     last_name: '',
     username: '',
     age: 0,
-    marital_status: '',
+    marital_status: 'Single', // default value
     is_employed: false,
-    is_founder: false,
+    is_founder: false
   });
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
         last_name: '',
         username: '',
         age: 0,
-        marital_status: '',
+        marital_status: 'Single',
         is_employed: false,
-        is_founder: false,
+        is_founder: false
       });
     }
   }, [editingUser]);
@@ -55,9 +55,9 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
       last_name: '',
       username: '',
       age: 0,
-      marital_status: '',
+      marital_status: 'Single',
       is_employed: false,
-      is_founder: false,
+      is_founder: false
     });
   };
 
@@ -98,14 +98,13 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
           onChange={(e) => setUser({ ...user, marital_status: e.target.value })}
           required
         >
-          <option value="" disabled>Select Marital Status</option>
           <option value="Single">Single</option>
           <option value="Married">Married</option>
           <option value="Divorced">Divorced</option>
           <option value="Widowed">Widowed</option>
         </select>
         <label>
-          Employed: 
+          Employed:
           <input
             type="checkbox"
             checked={user.is_employed}
@@ -113,7 +112,7 @@ const UserForm: React.FC<UserFormProps> = ({ addUser, editUser, editingUser }) =
           />
         </label>
         <label>
-          Founder: 
+          Founder:
           <input
             type="checkbox"
             checked={user.is_founder}
